@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Sidebar = ({selectedUser,setSelectedUser}) => {
 
-    const [showMenu, setShowMenu] = useState(false)
+    const [showMenu, setShowMenu] = useState  (false)
 
 
     const navigate=useNavigate();

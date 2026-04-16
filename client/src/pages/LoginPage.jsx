@@ -9,7 +9,17 @@ const LoginPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [bio, setBio] = useState("")
+  const [loading, setLoading] = useState(false);
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+
+  const onSubmitHandler=(event)=>{
+    event.preventDefault();
+
+    if(currState === 'Sign up' && !isDataSubmitted){
+      setIsDataSubmitted(true)
+      return;
+    }
+  }
   
 
   return (
@@ -19,10 +29,10 @@ const LoginPage = () => {
 
        {/* -------- right -------- */}
 
-      <form  className='border-2 bg-white/8 text-white border-gray-500 p-4 sm:p-6 flex flex-col gap-4 sm:gap-6 rounded-lg shadow-lg w-full max-w-md'>
+      <form onSubmit={onSubmitHandler}  className='border-2 bg-white/8 text-white border-gray-500 p-4 sm:p-6 flex flex-col gap-4 sm:gap-6 rounded-lg shadow-lg w-full max-w-md'>
         <h2 className='font-medium text-xl sm:text-2xl flex justify-between items-center'>
           {currState}
-          <img onClick={()=> setIsDataSubmitted(false)} src={assets.arrow_icon} alt="" className='w-5 cursor-pointer'/>
+          {isDataSubmitted && <img onClick={()=> setIsDataSubmitted(false)} src={assets.arrow_icon} alt="" className='w-5 cursor-pointer'/>}
           
         </h2>
 
@@ -34,7 +44,7 @@ const LoginPage = () => {
 
         {/* Login Form */}
         
-          <>
+         {currState ==='Login' &&  <>
             <input 
               onChange={(e)=>setEmail(e.target.value)} 
               value={email}
@@ -64,7 +74,7 @@ const LoginPage = () => {
             <div className='flex flex-col gap-2'>
               <p className='text-sm text-gray-600'>Create an account <span onClick={()=> {setCurrState("Sign up"); setIsDataSubmitted(false);}} className='font-medium text-violet-500 cursor-pointer hover:underline'>Click here</span></p>
             </div> 
-          </>
+          </>}
         
 
         {/* Signup Form */}

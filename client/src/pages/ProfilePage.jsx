@@ -70,7 +70,7 @@ const ProfilePage = () => {
             Save
           </button>
         </form>
-        <div className='flex flex-col items-center gap-4 p-6 sm:p-10'>
+        <div className='flex flex-col items-center gap-5 p-6 sm:p-10'>
             <img src={assets.logo_icon} alt="" className='w-32 h-32 rounded-full border-4 border-[#282142] shadow-lg'/>
         </div>
         

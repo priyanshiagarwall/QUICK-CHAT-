@@ -36,7 +36,7 @@ const LoginPage = () => {
 
        {/* -------- right -------- */}
 
-      <form onSubmit={onSubmitHandler}  className='border-2 bg-white/8 text-white border-gray-500 p-4 sm:p-6 flex flex-col gap-4 sm:gap-6 rounded-lg shadow-lg w-full max-w-md'>
+      <form onSubmit={onSubmitHandler}  className='border-2 bg-white/8 text-white border-gray-500 p-5 sm:p-6 flex flex-col gap-4 sm:gap-6 rounded-lg shadow-lg w-full max-w-md'>
         <h2 className='font-medium text-xl sm:text-2xl flex justify-between items-center'>
           {currState}
           {isDataSubmitted && <img onClick={()=> setIsDataSubmitted(false)} src={assets.arrow_icon} alt="" className='w-5 cursor-pointer'/>}

@@ -52,7 +52,7 @@ const ProfilePage = () => {
             value={name}
             type="text" 
             required 
-            placeholder='YOUR NAME' 
+            placeholder='ENTER YOUR NAME' 
             className='p-3 sm:p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 text-white placeholder-white bg-transparent'
           />
           <textarea 

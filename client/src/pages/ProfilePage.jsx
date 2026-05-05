@@ -71,7 +71,7 @@ const ProfilePage = () => {
           </button>
         </form>
         <div className='flex flex-col items-center gap-4 p-77 sm:p-10'>
-            <img src={assets.logo_icon} alt="" className='w-32 h-32 rounded-full border-4 border-[#282142] shadow-lg'/>
+            <img src={authUser.profilePic || assets.avatar_icon} alt="" className='w-32 h-32 rounded-full border-4 border-[#282142] shadow-lg' />
         </div>
         
       </div>

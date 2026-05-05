@@ -1,13 +1,31 @@
-import React, { useState } from 'react'
-import assets, { userDummyData } from '../assets/assets'
+import React, { useContext, useState,useEffect } from 'react'
+import assets from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
+import { ChatContext } from '../../context/ChatContext';
 
-const Sidebar = ({selectedUser,setSelectedUser}) => {
+const Sidebar = () => {
 
+     const {getUsers, users, selectedUser, setSelectedUser,
+        unseenMessages, setUnseenMessages } = useContext(ChatContext);
+
+
+    const [input, setInput] = useState(false)
     const [showMenu, setShowMenu] = useState  (false)
 
 
+     const {logout, onlineUsers} = useContext(AuthContext)
+
+
     const navigate=useNavigate();
+
+
+     const filteredUsers = input ? users.filter((user)=>user.fullName.toLowerCase().includes(input.toLowerCase())) : users;
+
+     useEffect(()=>{
+        getUsers();
+    },[onlineUsers])
+
 
   return (
     <div className={`bg-[#8185B2]/10 h-full p-3 sm:p-5 rounded-r-xl overflow-auto will-change-transform text-white tablet-sidebar ${selectedUser ? "max-md:hidden" : ''}`} >
@@ -29,7 +47,7 @@ const Sidebar = ({selectedUser,setSelectedUser}) => {
                             Edit Profile
                         </p>
                       <hr className="my-2 border-t border-gray-500" />
-                      <p 
+                      <p onClick={()=>logout()}
                             
                             className='cursor-pointer text-sm hover:text-white transition-colors tablet-menu-item'
                         >
@@ -52,20 +70,21 @@ const Sidebar = ({selectedUser,setSelectedUser}) => {
         </div>
 
         <div className='flex flex-col'>
-            {userDummyData.map((user,index)=>(
-                <div onClick={()=>{setSelectedUser(user)}}
+            {filteredUsers.map((user,index)=>(
+                <div onClick={()=>{setSelectedUser(user); setUnseenMessages(prev => ({...prev , [user._id]:0}))}}
                 key={index} className={`relative flex items-center gap-2 p-2 pl-3 sm:pl-4 rounded cursor-pointer text-sm sm:text-base hover:bg-[#282142]/30 transition-colors tablet-user-item ${selectedUser?._id === user._id && 'bg-[#282142]/50'}`}>
                     <img src={user?.profilePic || assets.avatar_icon} alt=''
                     className='w-[30px] sm:w-[35px] aspect-[1/1] rounded-full tablet-user-avatar' />
                     <div className='flex flex-col leading-4 sm:leading-5 min-w-0 flex-1 tablet-user-info'>
                         <p className='truncate tablet-user-name'>{user.fullName}</p>
-                        {index<3
+                        { onlineUsers.includes(user._id)
+                    
                             ? <span className='text-green-400 text-xs tablet-user-status'>Online</span>
                             : <span className='text-neutral-400 text-xs tablet-user-status'>Offline</span>
                         }
                     </div>
-                    {index>2 && <p className='absolute top-2 right-2 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50 tablet-unread-badge'>
-                    {index}
+                    {unseenMessages[user._id] >0 && <p className='absolute top-2 right-2 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50 tablet-unread-badge'>
+                    {unseenMessages[user._id]}
                     </p>}
                 </div>
             ))}
